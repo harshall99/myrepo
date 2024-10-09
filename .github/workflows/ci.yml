@@ -10,6 +10,8 @@ on:
 jobs:
   docker:
     runs-on: [self-hosted, my-self-runner]
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, 'Merge')  # Skip if merge commit
+
     steps:
       - 
         name: Check current user
@@ -32,3 +34,11 @@ jobs:
         with:
           push: true
           tags: cdharsh/my-repo:${{ github.sha }}
+
+      - name: Remove Docker image
+        run: |
+          IMAGE_NAME="cdharsh/my-repo"
+          echo "Attempting to remove images with the following tag:"
+          echo "${IMAGE_NAME}:${{ github.sha }}"
+          docker rmi "${IMAGE_NAME}:${{ github.sha }}" || true
+
