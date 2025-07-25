@@ -35,10 +35,10 @@ jobs:
           push: true
           tags: cdharsh/my-repo:${{ github.sha }}
 
-      #- name: Remove Docker image
-      #  run: |
-      #    IMAGE_NAME="cdharsh/my-repo"
-      #    echo "Attempting to remove images with the following tag:"
-      #    echo "${IMAGE_NAME}:${{ github.sha }}"
-      #    docker rmi "${IMAGE_NAME}:${{ github.sha }}" || true
+      - name: Remove Docker image
+        run: |
+          IMAGE_NAME="cdharsh/my-repo"
+          echo "Attempting to remove images with the following tag:"
+          echo "${IMAGE_NAME}:${{ github.sha }}"
+          docker rmi "${IMAGE_NAME}:${{ github.sha }}" || true
 
